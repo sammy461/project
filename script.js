@@ -130,8 +130,10 @@ const c_text = document.getElementById("c_text");
 const d_text = document.getElementById("d_text");
 const submitButton = document.getElementById("submit");
 
+
 let currentQuiz = 0;
 let score = 0;
+
 
 const deselectAnswers = () => {
     answerElements.forEach((answer) => (answer.checked = false));
@@ -163,7 +165,7 @@ const deselectAnswers = () => {
       if (currentQuiz < quizData.length) loadQuiz();
       else {
         quiz.innerHTML = `
-              <h2>You answered ${score}/${quizData.length} questions correctly</h2>
+              <h2>You answered ${score}/${quizData.length}questions correctly</h2>
               <button onclick="history.go(0)">Play Again</button>
           ` 
       }
