@@ -48,7 +48,7 @@ const quizData = [
         correct: "a",
     },
     {
-      question:"7. What is the purpose of the CSS “float” property?",
+      question:"7. What is the purpose of the CSS 'float' property?",
         a: "It controls the opacity of an element",
         b: "It positions an element to the left or right of its container",
         c: "It adds a shadow effect to an element",
@@ -96,7 +96,7 @@ const quizData = [
       correct: "b",
     },
     {
-      question:"13. What does the “typeof” operator return?",
+      question:"13. What does the 'typeof' operator return?",
       a: "The data type of a variable",
       b:  'The value of a variable',
       c: "The index of a variable",
@@ -129,11 +129,37 @@ const b_text = document.getElementById("b_text");
 const c_text = document.getElementById("c_text");
 const d_text = document.getElementById("d_text");
 const submitButton = document.getElementById("submit");
-
+const counter = document.getElementById("time");
+var countdownDuration = 5 * 60;
 
 let currentQuiz = 0;
 let score = 0;
 
+function formatTime(seconds) {
+  var minutes = Math.floor(seconds/60);
+  var remainingSeconds = seconds % 60;
+  return minutes + ":" + remainingSeconds;
+}
+
+function startCountdown(duration) {
+  var remainingTime = duration;
+
+  var countdownInterval = setInterval(function() {
+    counter.innerHTML = formatTime(remainingTime);
+
+    remainingTime--;
+
+    if (remainingTime < 0) {
+      clearInterval(countdownInterval);
+      quiz.innerHTML = `
+              <h1>Your time expired</h1>
+              <h2>You answered ${score}/${quizData.length}questions correctly</h2>
+              <button onclick="history.go(0)">Play Again</button>
+          ` 
+      console.log("time expired");
+    }
+  }, 1000);
+}
 
 const deselectAnswers = () => {
     answerElements.forEach((answer) => (answer.checked = false));
@@ -172,3 +198,4 @@ const deselectAnswers = () => {
     }
   });
   loadQuiz();
+  startCountdown(countdownDuration);
